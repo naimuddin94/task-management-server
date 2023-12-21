@@ -1,7 +1,7 @@
 const User = require("../models/userSchema");
 
 const createUser = async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, photo } = req.body;
 
   try {
     // Check if the user already exists
@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new User({ name, email });
+    const newUser = new User({ name, email, photo });
     await newUser.save();
 
     res.status(201).json(newUser);

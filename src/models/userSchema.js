@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  photo: String,
   created_at: {
     type: Date,
     default: Date.now,
