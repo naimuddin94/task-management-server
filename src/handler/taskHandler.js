@@ -39,8 +39,8 @@ const createTask = async (req, res) => {
       });
 
       // Save the task to the database
-      const savedTask = await newTask.save();
-      res.status(201).json(savedTask); // Send the saved task as JSON response
+      await newTask.save();
+      res.status(201).json({ message: "Task saved successfully" });
     } else {
       res.status(404).json({ message: "User not found" });
     }
