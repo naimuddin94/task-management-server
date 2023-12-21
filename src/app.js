@@ -2,12 +2,15 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const globalErrorHandler = require("./lib/globalErrorHandler");
+const taskRoutes = require("./routes/taskRoutes");
+const userRoutes = require("./routes/userRoutes");
 const app = express();
-
 
 app.use(express.json());
 app.use(cors());
 
+app.use("/tasks", taskRoutes);
+app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("server is running........");
