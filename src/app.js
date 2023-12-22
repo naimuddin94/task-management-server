@@ -7,16 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      "https://task-management-be969.web.app",
-      "https://task-management-be969.firebaseapp.com",
-      "http://localhost:5173",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
