@@ -1,5 +1,5 @@
-const Task = require("../models/taskSchema");
 const User = require("../models/userSchema");
+const Task = require("../models/taskSchema");
 
 const getTask = async (req, res) => {
   const userEmail = req.params.email;
@@ -29,6 +29,7 @@ const createTask = async (req, res) => {
     const user = await User.findOne({ email: userEmail });
 
     if (user) {
+      console.log(user);
       // Create a new task and associate it with the user
       const newTask = new Task({
         title,
@@ -37,14 +38,16 @@ const createTask = async (req, res) => {
         priority,
         createdBy: user._id,
       });
-
+      console.log("console from 41 line", newTask);
       // Save the task to the database
-      await newTask.save();
+      const savedTask = await newTask.save();
+      console.log(savedTask);
       res.status(201).json({ message: "Task saved successfully" });
     } else {
       res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
