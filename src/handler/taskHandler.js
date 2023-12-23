@@ -29,7 +29,6 @@ const createTask = async (req, res) => {
     const user = await User.findOne({ email: userEmail });
 
     if (user) {
-      console.log(user);
       // Create a new task and associate it with the user
       const newTask = new Task({
         title,
@@ -47,7 +46,17 @@ const createTask = async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const updateStatus = async (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+  try {
+    await Task.findByIdAndUpdate(id, { status }, { new: true });
+    res.status(200).json({ message: "Task updated successfully" });
+  } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -60,7 +69,7 @@ const deleteTask = async (req, res) => {
     const deletedTask = await Task.findByIdAndDelete(taskId);
 
     if (deletedTask) {
-      res.json({ message: "Task deleted successfully" });
+      res.status(200).json({ message: "Task deleted successfully" });
     } else {
       res.status(404).json({ message: "Task not found" });
     }
@@ -69,4 +78,4 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { getTask, createTask, deleteTask };
+module.exports = { getTask, createTask, deleteTask, updateStatus };
